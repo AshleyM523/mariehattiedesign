@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marie Hattie Design | The May Intake</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+    <style>
+        :root {
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f2ff;
+            --neon-yellow: #fefe33;
+            --text-main: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--neon-pink); }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-3d {
+            width: 100%;
+            height: 500px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+
+        /* The May Offer Section */
+        .offer-section {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(to bottom, #000, #0a0a0a);
+        }
+
+        .offer-card {
+            border: 2px solid var(--neon-blue);
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .price {
+            font-size: 4rem;
+            color: var(--neon-yellow);
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+
+        .slots {
+            color: var(--neon-pink);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Portfolio Placeholders */
+        .portfolio {
+            padding: 100px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .placeholder-card {
+            height: 300px;
+            background: var(--card-bg);
+            border: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            color: #444;
+        }
+
+        .placeholder-card:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
+        }
+
+        /* Button Style */
+        .cta-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        footer {
+            padding: 50px;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Marie Hattie <span>Design</span></div>
+        <div>
+            <a href="mailto:Ashleysshs@gmail.com" style="color: var(--neon-yellow); text-decoration: none; font-weight: bold;">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-3d">
+            <spline-viewer url="https://prod.spline.design/your-unique-id/scene.splinecode"></spline-viewer>
+        </div>
+        <h1>Design. Fast.</h1>
+    </section>
+
+    <section class="offer-section">
+        <div class="offer-card">
+            <p class="slots">May Intake: 4 Slots Remaining</p>
+            <h2>The 1-Week Website</h2>
+            <p>Full launch. 2 Revisions. Zero fluff.</p>
+            <div class="price">$500</div>
+            <p>Rate increases to $1,000 after May 31st.</p>
+            <a href="mailto:Ashleysshs@gmail.com?subject=May%20Intake%20Inquiry" class="cta-btn">Secure My Spot</a>
+        </div>
+    </section>
+
+    <h2 style="text-align: center; text-transform: uppercase; letter-spacing: 4px;">Previous Work</h2>
+    <section class="portfolio">
+        <div class="placeholder-card">Project Loading...</div>
+        <div class="placeholder-card">Coming May 2026</div>
+        <div class="placeholder-card">In Development</div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Marie Hattie Design. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
