@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cognify | AI Data & Document Automation</title>
+<meta name="description" content="Cognify is the end-to-end AI platform for automated data & document workflows. Extract, process, and export clean data in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050509;
+    --bg-alt:#08080d;
+    --card:#0f0f16;
+    --card-2:#12121b;
+    --border:#1e1e28;
+    --border-soft:rgba(255,255,255,0.08);
+    --text:#f4f4f7;
+    --text-dim:#9a9aa8;
+    --text-faint:#5c5c68;
+    --gold:#f2b544;
+    --gold-2:#f7d38a;
+    --blue:#4fb2ff;
+    --pink:#ff6fa0;
+    --purple:#a78bff;
+    --orange:#ff8a4c;
+    --radius:18px;
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    line-height:1.15;
+    margin:0;
+  }
+  p{margin:0;color:var(--text-dim);}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  section{position:relative;}
+
+  /* Reusable bits */
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 16px;border-radius:999px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--border-soft);
+    color:var(--text-dim);font-size:0.8rem;font-weight:600;
+    letter-spacing:0.02em;text-transform:uppercase;
+  }
+  .badge::before{
+    content:"";width:6px;height:6px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--pink));
+    box-shadow:0 0 8px var(--gold);
+  }
+  .grad-gold{background:linear-gradient(90deg,var(--gold-2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .grad-blue{background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 28px;border-radius:999px;
+    font-weight:600;font-size:0.95rem;
+    border:1px solid transparent;cursor:pointer;
+    transition:.25s ease;white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,#fff,#e7e7ee);
+    color:#0a0a0f;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,0.15);}
+  .btn-outline{
+    background:transparent;border-color:var(--border);
+    color:var(--text);
+  }
+  .btn-outline:hover{border-color:var(--text-dim);}
+  .btn-gold{
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    color:#20140a;
+  }
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(242,181,68,0.25);}
+  .btn-block{width:100%;justify-content:center;}
+
+  .section-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .section-head .badge{margin-bottom:18px;}
+  .section-head h2{font-size:clamp(1.7rem,3.4vw,2.6rem);margin-bottom:14px;}
+  .section-head p{font-size:1rem;}
+
+  /* ===== NAV ===== */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(5,5,9,0.75);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-0.01em;}
+  .logo svg{width:26px;height:26px;}
+  .nav-links{display:flex;align-items:center;gap:32px;font-size:0.92rem;color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-actions{display:flex;align-items:center;gap:14px;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:1.1rem;}
+
+  /* ===== HERO ===== */
+  .hero{padding:88px 0 0;text-align:center;overflow:hidden;}
+  .hero-inner{max-width:720px;margin:0 auto;padding:0 24px;}
+  .hero h1{font-size:clamp(2.1rem,5.6vw,3.6rem);letter-spacing:-0.02em;margin:20px 0 20px;}
+  .hero p{font-size:clamp(0.95rem,1.6vw,1.1rem);max-width:560px;margin:0 auto 32px;}
+
+  .hero-graphic{
+    position:relative;height:clamp(220px,38vw,420px);margin-top:56px;
+    background:
+      radial-gradient(ellipse 60% 90% at 20% 100%, rgba(255,138,76,0.55), transparent 60%),
+      radial-gradient(ellipse 55% 80% at 50% 110%, rgba(255,111,160,0.4), transparent 60%),
+      radial-gradient(ellipse 60% 90% at 82% 100%, rgba(79,178,255,0.55), transparent 60%),
+      var(--bg);
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .hero-graphic::before{
+    content:"";position:absolute;left:0;right:0;bottom:38%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);
+  }
+  .hero-graphic svg{width:min(560px,86%);height:auto;position:relative;z-index:2;filter:drop-shadow(0 20px 60px rgba(0,0,0,0.6));}
+
+  /* ===== LOGO STRIP ===== */
+  .logos{padding:44px 0;border-bottom:1px solid var(--border-soft);}
+  .logos-track{
+    max-width:var(--maxw);margin:0 auto;padding:0 24px;
+    display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:space-between;
+  }
+  .logo-ph{
+    color:var(--text-faint);font-weight:700;letter-spacing:0.08em;font-size:0.85rem;
+    opacity:0.7;
+  }
+
+  /* ===== STATS ===== */
+  .stats{padding:96px 0 64px;text-align:center;}
+  .stats h2{max-width:620px;margin:0 auto 48px;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--text);}
+  .stats h2 .grad-gold{font-style:normal;}
+  .stats-grid{
+    max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .stat{padding:24px 12px;border-right:1px solid var(--border-soft);}
+  .stat:last-child{border-right:none;}
+  .stat strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--gold);font-weight:700;}
+  .stat span{font-size:0.85rem;color:var(--text-dim);}
+
+  /* ===== STEPS ===== */
+  .steps{padding:64px 0 96px;}
+  .steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  @media(max-width:900px){.steps-grid{grid-template-columns:1fr;}}
+
+  .dashboard-mock{
+    background:linear-gradient(160deg,#14141d,#0a0a10);
+    border:1px solid var(--border);border-radius:20px;padding:16px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
+  }
+  .dm-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .dm-top .logo{font-size:0.85rem;}
+  .dm-top .logo svg{width:18px;height:18px;}
+  .dm-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--pink));}
+  .dm-body{display:grid;grid-template-columns:70px 1fr;gap:12px;}
+  .dm-side{display:flex;flex-direction:column;gap:10px;}
+  .dm-side span{height:8px;border-radius:4px;background:rgba(255,255,255,0.06);}
+  .dm-side span:nth-child(3){background:linear-gradient(90deg,var(--gold),var(--pink));}
+  .dm-main{background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:12px;padding:14px;}
+  .dm-welcome{font-size:0.8rem;color:var(--text-dim);margin-bottom:10px;}
+  .dm-welcome b{color:var(--text);}
+  .dm-stat{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+  .dm-stat strong{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;}
+  .dm-stat span{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-faint);}
+  .dm-chart{height:60px;}
+
+  .steps-list{display:flex;flex-direction:column;gap:28px;}
+  .steps-list li{display:flex;gap:18px;}
+  .step-num{
+    flex:none;width:40px;height:40px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;
+    background:linear-gradient(135deg,rgba(242,181,68,0.18),rgba(255,111,160,0.1));
+    border:1px solid var(--border-soft);color:var(--gold);
+  }
+  .steps-list h3{font-size:1.05rem;margin-bottom:6px;color:var(--text);}
+  .steps-list p{font-size:0.9rem;}
+
+  /* ===== ADVANTAGE ===== */
+  .advantage{padding:96px 0;background:linear-gradient(180deg,transparent,rgba(255,138,76,0.04),transparent);}
+  .adv-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;max-width:var(--maxw);margin:0 auto;padding:0 24px;align-items:start;}
+  @media(max-width:900px){.adv-grid{grid-template-columns:1fr;}}
+
+  .adv-list{display:flex;flex-direction:column;border-top:1px solid var(--border-soft);}
+  .adv-item{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:18px 4px;border-bottom:1px solid var(--border-soft);
+    cursor:pointer;
+  }
+  .adv-item span{font-size:0.95rem;color:var(--text-dim);}
+  .adv-item.active span{color:var(--text);font-weight:600;}
+  .adv-dot{width:34px;height:18px;border-radius:999px;background:rgba(255,255,255,0.08);position:relative;flex:none;}
+  .adv-dot::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--text-faint);transition:.2s;}
+  .adv-item.active .adv-dot{background:linear-gradient(90deg,var(--gold),var(--orange));}
+  .adv-item.active .adv-dot::after{left:18px;background:#1a1204;}
+
+  .adv-visuals{display:grid;grid-template-columns:1fr;gap:16px;}
+  .adv-card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px;
+  }
+  .adv-card h4{font-size:0.95rem;margin-bottom:6px;color:var(--text);}
+  .adv-card p{font-size:0.82rem;}
+  .adv-ai{position:relative;min-height:180px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .adv-ai svg{width:170px;height:170px;}
+  .adv-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .donut-wrap{display:flex;align-items:center;gap:14px;}
+  .donut{
+    width:74px;height:74px;border-radius:50%;flex:none;
+    background:conic-gradient(var(--gold) 0 35%, var(--pink) 35% 60%, var(--blue) 60% 82%, var(--purple) 82% 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .donut::after{content:"";width:44px;height:44px;border-radius:50%;background:var(--card);}
+  .donut-legend{font-size:0.72rem;color:var(--text-dim);display:flex;flex-direction:column;gap:5px;}
+  .donut-legend i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:6px;}
+
+  /* ===== PRICING ===== */
+  .pricing{padding:96px 0;}
+  .toggle{
+    display:flex;align-items:center;gap:4px;width:max-content;margin:0 auto 48px;
+    background:var(--card);border:1px solid var(--border);border-radius:999px;padding:4px;
+  }
+  .toggle button{
+    border:none;background:transparent;color:var(--text-dim);font-weight:600;font-size:0.85rem;
+    padding:9px 20px;border-radius:999px;cursor:pointer;font-family:inherit;
+  }
+  .toggle button.active{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#20140a;}
+
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:var(--maxw);margin:0 auto;padding:0 24px;align-items:stretch;}
+  @media(max-width:900px){.pricing-grid{grid-template-columns:1fr;max-width:420px;}}
+
+  .plan{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:32px 26px;display:flex;flex-direction:column;
+  }
+  .plan.featured{
+    border-color:rgba(242,181,68,0.5);
+    background:linear-gradient(180deg,rgba(242,181,68,0.08),var(--card) 40%);
+    position:relative;transform:translateY(-8px);
+  }
+  .plan-tag{
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#20140a;
+    font-size:0.7rem;font-weight:700;padding:5px 14px;border-radius:999px;text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .plan h3{font-size:1.05rem;color:var(--text);margin-bottom:8px;}
+  .plan .desc{font-size:0.83rem;min-height:44px;margin-bottom:18px;}
+  .plan .price{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--text);}
+  .plan .price span{font-size:0.9rem;color:var(--text-dim);font-weight:500;font-family:'Inter',sans-serif;}
+  .plan .btn{margin:22px 0 24px;}
+  .plan .includes{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-faint);margin-bottom:14px;}
+  .plan ul{display:flex;flex-direction:column;gap:11px;}
+  .plan ul li{display:flex;gap:10px;font-size:0.86rem;color:var(--text-dim);align-items:flex-start;}
+  .plan ul li svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--gold);}
+
+  /* ===== INTEGRATIONS ===== */
+  .integrations{padding:96px 0;text-align:center;}
+  .hub{
+    position:relative;max-width:560px;height:280px;margin:56px auto 0;
+  }
+  .hub-center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:70px;height:70px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #1c1c26, #0a0a10);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 10px rgba(242,181,68,0.05), 0 0 40px rgba(242,181,68,0.25);
+    z-index:3;
+  }
+  .hub-center svg{width:28px;height:28px;}
+  .hub-node{
+    position:absolute;width:44px;height:44px;border-radius:12px;
+    background:var(--card);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:1rem;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.6);
+  }
+  .hub-line{position:absolute;background:linear-gradient(90deg,transparent,var(--border));height:1px;transform-origin:left center;z-index:1;}
+
+  /* ===== CTA BLOCK ===== */
+  .cta-block{padding:0 0 96px;}
+  .cta-card{
+    max-width:var(--maxw);margin:0 auto;padding:56px 24px;border-radius:28px;
+    display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center;
+    background:
+      radial-gradient(ellipse 70% 140% at 0% 100%, rgba(255,138,76,0.35), transparent 60%),
+      radial-gradient(ellipse 70% 140% at 100% 0%, rgba(79,178,255,0.3), transparent 60%),
+      var(--card);
+    border:1px solid var(--border);
+  }
+  @media(max-width:760px){.cta-card{grid-template-columns:1fr;}}
+  .cta-card h2{font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:18px;color:var(--text);}
+  .cta-card .free-list{display:flex;flex-direction:column;gap:10px;margin-bottom:0;}
+  .cta-card .free-list li{display:flex;gap:9px;font-size:0.88rem;color:var(--text-dim);}
+  .cta-card .free-list li svg{flex:none;width:15px;height:15px;color:var(--gold);margin-top:3px;}
+
+  /* ===== FAQ ===== */
+  .faq{padding:32px 0 96px;}
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  @media(max-width:760px){.faq-grid{grid-template-columns:1fr;}}
+  .faq-item{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:18px 20px;cursor:pointer;
+  }
+  .faq-q{display:flex;justify-content:space-between;align-items:center;gap:14px;font-weight:600;font-size:0.92rem;color:var(--text);}
+  .faq-q .icon{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.85rem;transition:.2s;}
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);background:var(--gold);color:#20140a;border-color:var(--gold);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-item.open .faq-a{max-height:200px;margin-top:12px;}
+  .faq-a p{font-size:0.85rem;}
+
+  /* ===== FOOTER ===== */
+  footer{border-top:1px solid var(--border-soft);padding:64px 0 28px;background:var(--bg-alt);}
+  .footer-top{
+    display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;
+    max-width:var(--maxw);margin:0 auto 48px;padding:0 24px;
+  }
+  .footer-brand p{max-width:260px;margin:14px 0 18px;font-size:0.85rem;}
+  .newsletter{display:flex;gap:8px;max-width:320px;}
+  .newsletter input{
+    flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:11px 14px;color:var(--text);font-family:inherit;font-size:0.85rem;
+  }
+  .newsletter input::placeholder{color:var(--text-faint);}
+  .newsletter button{
+    flex:none;width:42px;border-radius:10px;border:none;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#20140a;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
+  .footer-cols h5{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);margin-bottom:16px;}
+  .footer-cols ul{display:flex;flex-direction:column;gap:11px;}
+  .footer-cols a{font-size:0.88rem;color:var(--text-dim);}
+  .footer-cols a:hover{color:var(--text);}
+  .footer-bottom{
+    max-width:var(--maxw);margin:0 auto;padding:24px 24px 0;border-top:1px solid var(--border-soft);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:0.8rem;color:var(--text-faint);
+  }
+  .footer-bottom a{color:var(--text-faint);}
+  .footer-bottom a:hover{color:var(--text-dim);}
+  .footer-bottom .legal{display:flex;gap:20px;}
+
+  @media(max-width:900px){
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;align-items:center;justify-content:center;}
+    .stats-grid{grid-template-columns:1fr;gap:0;}
+    .stat{border-right:none;border-bottom:1px solid var(--border-soft);}
+    .stat:last-child{border-bottom:none;}
+    .adv-row2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9 3 3 9 3 16s6 13 13 13 13-6 13-13S23 3 16 3Zm0 4a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill="url(#lg)"/><defs><linearGradient id="lg" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#f2b544"/><stop offset="1" stop-color="#ff6fa0"/></linearGradient></defs></svg>
+      Cognify
+    </a>
+    <nav class="nav-links">
+      <a href="#">Product</a>
+      <a href="#advantage">Solutions</a>
+      <a href="#">Blog</a>
+      <a href="#">Resources</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline" href="#" style="padding:10px 22px;font-size:0.85rem;">Sign in</a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="badge">Next-Gen Data Intelligence</span>
+    <h1>Transform Complex Data Into<br>Intelligent Outcomes</h1>
+    <p>Process documents, extract critical information, and unlock meaningful insights through intelligent automation designed for modern businesses.</p>
+    <a class="btn btn-primary" href="#pricing">Try for Free →</a>
+  </div>
+  <div class="hero-graphic">
+    <svg viewBox="0 0 520 240" fill="none">
+      <g opacity="0.9">
+        <polygon points="70,220 110,120 150,220" fill="#2b3a4a"/>
+        <polygon points="150,220 190,90 230,220" fill="#3d4f63"/>
+        <polygon points="215,220 260,40 300,220" fill="url(#g1)"/>
+        <polygon points="285,220 330,70 370,220" fill="url(#g2)"/>
+        <polygon points="360,220 400,110 440,220" fill="url(#g3)"/>
+        <polygon points="420,220 455,140 490,220" fill="#3a4a63"/>
+      </g>
+      <defs>
+        <linearGradient id="g1" x1="215" y1="40" x2="300" y2="220"><stop stop-color="#ffb15c"/><stop offset="0.5" stop-color="#ff6f8f"/><stop offset="1" stop-color="#7a5cff"/></linearGradient>
+        <linearGradient id="g2" x1="285" y1="70" x2="370" y2="220"><stop stop-color="#ff8a4c"/><stop offset="1" stop-color="#ff5c9a"/></linearGradient>
+        <linearGradient id="g3" x1="360" y1="110" x2="440" y2="220"><stop stop-color="#4fb2ff"/><stop offset="1" stop-color="#7a5cff"/></linearGradient>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<section class="logos">
+  <div class="logos-track">
+    <span class="logo-ph">LOCXO</span>
+    <span class="logo-ph">◆ NIMBUS</span>
+    <span class="logo-ph">3000</span>
+    <span class="logo-ph">FLUX</span>
+    <span class="logo-ph">SVUM</span>
+    <span class="logo-ph">BLOOM</span>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <h2>The End-to-End AI Platform for Automated<br>Data &amp; Document Workflows</h2>
+    <div class="stats-grid">
+      <div class="stat"><strong>500M+</strong><span>Documents processed</span></div>
+      <div class="stat"><strong>10x</strong><span>Faster workflow speed</span></div>
+      <div class="stat"><strong>99.8%</strong><span>Extraction accuracy</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="how-it-works">
+  <div class="section-head">
+    <span class="badge">How it works</span>
+    <h2>Automate Your Entire <span class="grad-gold">Data Lifecycle</span><br>in 3 Simple Steps</h2>
+    <p>Ingest unstructured data from any source, extract actionable insights with AI, and seamlessly export clean outputs to your existing stack.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="dashboard-mock">
+      <div class="dm-top">
+        <span class="logo"><svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9 3 3 9 3 16s6 13 13 13 13-6 13-13S23 3 16 3Zm0 4a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill="url(#lg2)"/><defs><linearGradient id="lg2" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#f2b544"/><stop offset="1" stop-color="#ff6fa0"/></linearGradient></defs></svg>Cognify</span>
+        <div class="dm-avatar"></div>
+      </div>
+      <div class="dm-body">
+        <div class="dm-side">
+          <span style="width:70%"></span><span style="width:50%"></span><span style="width:60%"></span>
+          <span style="width:80%"></span><span style="width:45%"></span><span style="width:55%"></span>
+        </div>
+        <div class="dm-main">
+          <p class="dm-welcome">Welcome back, <b>James</b></p>
+          <div class="dm-stat"><strong>2,458</strong><span>Documents Processed</span></div>
+          <svg class="dm-chart" viewBox="0 0 240 60" preserveAspectRatio="none">
+            <polyline points="0,45 30,38 60,42 90,20 120,28 150,12 180,22 210,8 240,15" fill="none" stroke="url(#lc)" stroke-width="2.5"/>
+            <defs><linearGradient id="lc" x1="0" y1="0" x2="240" y2="0"><stop stop-color="#f2b544"/><stop offset="1" stop-color="#4fb2ff"/></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><div><h3>Connect &amp; Ingest Unstructured Data</h3><p>Upload PDFs, spreadsheets, or connect live API endpoints directly. Our platform handles messy formats effortlessly.</p></div></li>
+      <li><span class="step-num">02</span><div><h3>AI Extraction &amp; Intelligent Processing</h3><p>Custom AI models identify key fields, extract information, and validate complex data in real time with cross-format inference.</p></div></li>
+      <li><span class="step-num">03</span><div><h3>Export Clean Data &amp; Trigger Workflows</h3><p>Sync processed data straight to your database, CRM, or existing automated downstream actions instantly.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="advantage" id="advantage">
+  <div class="adv-grid">
+    <div>
+      <span class="badge">Advantage</span>
+      <h2 style="font-size:clamp(1.6rem,3.2vw,2.3rem);margin:18px 0 14px;">Built for High-Volume, <span class="grad-gold">High-Precision</span><br>Data Processing</h2>
+      <p style="margin-bottom:30px;">Eliminate manual data entry, streamline multi-format extraction, and integrate real-time automation directly into your tech stack.</p>
+      <div class="adv-list">
+        <div class="adv-item"><span>Enterprise Security &amp; Compliance</span><div class="adv-dot"></div></div>
+        <div class="adv-item"><span>Seamless Stack Integrations</span><div class="adv-dot"></div></div>
+        <div class="adv-item active"><span>Automated Data Extraction</span><div class="adv-dot"></div></div>
+        <div class="adv-item"><span>Real-time Pipeline Analytics</span><div class="adv-dot"></div></div>
+        <div class="adv-item"><span>Multi-Format Processing</span><div class="adv-dot"></div></div>
+      </div>
+    </div>
+    <div class="adv-visuals">
+      <div class="adv-card adv-ai">
+        <svg viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="46" fill="none" stroke="url(#ag)" stroke-width="1.4" opacity="0.6"/>
+          <circle cx="100" cy="100" r="30" fill="url(#ag2)" opacity="0.9"/>
+          <g stroke="#f2b544" stroke-width="1" opacity="0.5">
+            <line x1="100" y1="100" x2="40" y2="55"/><line x1="100" y1="100" x2="165" y2="50"/>
+            <line x1="100" y1="100" x2="30" y2="140"/><line x1="100" y1="100" x2="170" y2="150"/>
+            <line x1="100" y1="100" x2="100" y2="20"/><line x1="100" y1="100" x2="100" y2="180"/>
+          </g>
+          <g fill="#f2b544"><circle cx="40" cy="55" r="3"/><circle cx="165" cy="50" r="3"/><circle cx="30" cy="140" r="3"/><circle cx="170" cy="150" r="3"/><circle cx="100" cy="20" r="3"/><circle cx="100" cy="180" r="3"/></g>
+          <text x="100" y="106" text-anchor="middle" font-family="Space Grotesk" font-size="22" fill="#fff" font-weight="700">AI</text>
+          <defs>
+            <linearGradient id="ag" x1="54" y1="54" x2="146" y2="146"><stop stop-color="#f2b544"/><stop offset="1" stop-color="#ff6fa0"/></linearGradient>
+            <radialGradient id="ag2"><stop stop-color="#3a2a4a"/><stop offset="1" stop-color="#151020"/></radialGradient>
+          </defs>
+        </svg>
+        <div>
+          <h4>AI-Driven Extraction &amp; Auto-validation</h4>
+          <p>Neural OCR extracts tables, key values, and free text with high precision while auto-cleansing unstructured payloads.</p>
+        </div>
+      </div>
+      <div class="adv-row2">
+        <div class="adv-card">
+          <h4>Information Extracted</h4>
+          <div class="donut-wrap">
+            <div class="donut"></div>
+            <div class="donut-legend">
+              <span><i style="background:var(--gold)"></i>Text Data — 35%</span>
+              <span><i style="background:var(--pink)"></i>Tables — 25%</span>
+              <span><i style="background:var(--blue)"></i>Key Values — 22%</span>
+              <span><i style="background:var(--purple)"></i>Metadata — 18%</span>
+            </div>
+          </div>
+          <p style="margin-top:10px;font-size:0.72rem;">18,742 fields extracted</p>
+        </div>
+        <div class="adv-card">
+          <h4>Processing Overview</h4>
+          <svg viewBox="0 0 160 60" preserveAspectRatio="none">
+            <polyline points="0,45 25,35 50,40 75,18 100,26 125,10 160,16" fill="none" stroke="#4fb2ff" stroke-width="2.5"/>
+          </svg>
+          <p style="margin-top:10px;font-size:0.72rem;">May 10 – May 20</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-head">
+    <span class="badge">Pricing</span>
+    <h2>Simple &amp; <span class="grad-gold">Flexible</span> Pricing</h2>
+    <p>Choose the perfect subscription for your business. Scale effortlessly across teams, AI-powered tools, and dedicated support.</p>
+  </div>
+  <div class="toggle">
+    <button class="active" data-plan="monthly">Monthly Plan</button>
+    <button data-plan="yearly">Yearly Plan</button>
+  </div>
+  <div class="pricing-grid">
+    <div class="plan">
+      <h3>Starter</h3>
+      <p class="desc">Ideal for startups and small teams automating basic document workflows.</p>
+      <div class="price">$29<span>/month</span></div>
+      <a href="#" class="btn btn-outline btn-block">Start Free Trial</a>
+      <p class="includes">What's included</p>
+      <ul>
+        <li>✓ Up to 5,000 documents/mo</li>
+        <li>✓ Core OCR &amp; data extraction</li>
+        <li>✓ Access to CSV, XLSX &amp; Excel</li>
+        <li>✓ Standard API access</li>
+        <li>✓ Email support</li>
+      </ul>
+    </div>
+    <div class="plan featured">
+      <span class="plan-tag">Most Popular</span>
+      <h3>Professional</h3>
+      <p class="desc">For growing businesses that need scalable AI-powered document automation.</p>
+      <div class="price">$99<span>/month</span></div>
+      <a href="#" class="btn btn-gold btn-block">Get Started Now</a>
+      <p class="includes">What's included</p>
+      <ul>
+        <li>✓ Up to 50,000 documents/mo</li>
+        <li>✓ Advanced AI parsing &amp; validation</li>
+        <li>✓ Custom API &amp; Zapier integration</li>
+        <li>✓ Automated data pipelines</li>
+        <li>✓ Priority live chat support</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>Enterprise</h3>
+      <p class="desc">Dedicated infrastructure and advanced processing for large organizations.</p>
+      <div class="price">Custom Price</div>
+      <a href="#" class="btn btn-outline btn-block">Contact us</a>
+      <p class="includes">What's included</p>
+      <ul>
+        <li>✓ Unlimited document processing</li>
+        <li>✓ Everything in Professional, plus:</li>
+        <li>✓ Custom AI model training</li>
+        <li>✓ On-premise or cloud deployment</li>
+        <li>✓ Dedicated account manager &amp; 99.9% uptime SLA</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="integrations">
+  <div class="wrap">
+    <h2 style="font-size:clamp(1.6rem,3.2vw,2.3rem);">Instant 50+ app<br><span class="grad-gold">Integrations</span> for Automation</h2>
+    <p style="max-width:480px;margin:16px auto 0;">Connect your favorite tools and streamline your workflow in minutes. Automate data syncing effortlessly, without a single line of code.</p>
+    <div class="hub" id="hub"></div>
+  </div>
+</section>
+
+<section class="cta-block">
+  <div class="wrap">
+    <div class="cta-card">
+      <div>
+        <h2>Get started with Cognify<br><span class="grad-gold">for free</span></h2>
+        <p style="margin-bottom:14px;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-faint);">Our free plan includes:</p>
+        <ul class="free-list">
+          <li>✓ Up to 500 documents per month + 100 pages</li>
+          <li>✓ Standard OCR for basic document parsing</li>
+          <li>✓ API access &amp; automation with limited scope</li>
+          <li>✓ Build and deploy end-to-end document workflows</li>
+        </ul>
+      </div>
+      <a href="#" class="btn btn-primary">Try Cognify →</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-head">
+    <h2>Frequently <span class="grad-gold">Asked</span> Questions</h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item open">
+      <div class="faq-q"><span>What file formats are supported?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Cognify supports PDF, DOCX, XLSX, CSV, images (PNG/JPG), and direct API/JSON payloads out of the box.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>How accurate is the AI extraction?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Our models average 99.8% field-level extraction accuracy across mixed, real-world document sets.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Is my data secure and compliant?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Yes — Cognify is SOC 2 Type II certified with encryption in transit and at rest, plus GDPR-ready data handling.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>What if the AI makes an error?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Low-confidence extractions are flagged for human-in-the-loop review before they sync downstream.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>How fast can I integrate?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Most teams are live within a day using our API, native connectors, or no-code Zapier integration.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Is there a free trial?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Yes — every paid plan starts with a 14-day free trial, no credit card required.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand" style="max-width:320px;">
+      <a class="logo" href="#">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9 3 3 9 3 16s6 13 13 13 13-6 13-13S23 3 16 3Zm0 4a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill="url(#lg3)"/><defs><linearGradient id="lg3" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#f2b544"/><stop offset="1" stop-color="#ff6fa0"/></linearGradient></defs></svg>
+        Cognify
+      </a>
+      <p>Subscribe for our newsletter today</p>
+      <form class="newsletter" onsubmit="return false;">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit" aria-label="Subscribe">→</button>
+      </form>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h5>Menu</h5>
+        <ul>
+          <li><a href="#">Features</a></li>
+          <li><a href="#advantage">Security</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Compare</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Cognify. All Rights Reserved</span>
+    <span class="legal"><a href="#">Privacy Policy</a><a href="#">Terms of Security</a></span>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click',()=>{
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Advantage toggle list
+  document.querySelectorAll('.adv-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      document.querySelectorAll('.adv-item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // Pricing monthly/yearly toggle
+  const prices = { monthly:['29','99','Custom Price'], yearly:['24','79','Custom Price'] };
+  document.querySelectorAll('.toggle button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const vals = prices[btn.dataset.plan];
+      document.querySelectorAll('.plan .price').forEach((el,i)=>{
+        el.innerHTML = vals[i] === 'Custom Price' ? 'Custom Price' : `$${vals[i]}<span>/month</span>`;
+      });
+    });
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click',()=>{
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? 'none' : 'flex';
+    navLinks.style.cssText += open ? '' : 'position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#08080d;padding:20px 24px;border-bottom:1px solid #1e1e28;gap:18px;';
+  });
+
+  // Integration hub diagram (built with JS so it lays out relative to its own size)
+  (function(){
+    const hub = document.getElementById('hub');
+    const icons = ['📄','📊','☁️','⚡','🔗','💬','🗂️','📈'];
+    const cx = hub.clientWidth/2, cy = hub.clientHeight/2;
+    const r = Math.min(cx,cy) - 30;
+
+    const center = document.createElement('div');
+    center.className = 'hub-center';
+    center.innerHTML = '<svg viewBox="0 0 32 32" fill="none"><path d="M16 3C9 3 3 9 3 16s6 13 13 13 13-6 13-13S23 3 16 3Zm0 4a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill="#f2b544"/></svg>';
+    hub.appendChild(center);
+
+    icons.forEach((ic,i)=>{
+      const angle = (i/icons.length) * Math.PI*2 - Math.PI/2;
+      const x = cx + r*Math.cos(angle);
+      const y = cy + r*Math.sin(angle)*0.75;
+
+      const line = document.createElement('div');
+      const len = Math.sqrt((x-cx)**2 + (y-cy)**2);
+      const rot = Math.atan2(y-cy, x-cx) * 180/Math.PI;
+      line.className = 'hub-line';
+      line.style.cssText = `width:${len}px;left:${cx}px;top:${cy}px;transform:rotate(${rot}deg);`;
+      hub.appendChild(line);
+
+      const node = document.createElement('div');
+      node.className = 'hub-node';
+      node.style.cssText = `left:${x-22}px;top:${y-22}px;`;
+      node.textContent = ic;
+      hub.appendChild(node);
+    });
+  })();
+</script>
+
+</body>
+</html>
